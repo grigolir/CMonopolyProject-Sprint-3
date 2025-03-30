@@ -5,62 +5,122 @@ import java.awt.*;
 
 public class GUI extends JFrame {
 
-    private JPanel panelMain;
+    private JPanel gameBoardPanel; // Change from GameBoardPanel to JPanel
 
     /**
-     * initialization of GUI JPanel
+     * Initialization of GUI JPanel named gameBoardPanel
      */
     public GUI() {
-        panelMain = new JPanel();
-        add(panelMain);
         setTitle("TestMonopoly");
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = toolkit.getScreenSize();
-        int screenWidth = screenSize.width;
-        int screenHeight = screenSize.height;
-        setSize(screenWidth, screenHeight);
-        setLocation(0, 0);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Full-screen mode
+        setLayout(new BorderLayout()); // Ensure layout is set
+        gameBoardPanel = new GameBoardPanel();
+
+        add(gameBoardPanel, BorderLayout.CENTER);
+
         setVisible(true);
     }
 
-    /**
-     * creating squares for GUI JPanel
-     * @param g the specified Graphics window
-     * square: 80 x 80 pixels
-     * space on right of game board can show all player stats
-     */
-    public void paint(Graphics g) {
-        Graphics2D g2D1 = (Graphics2D) g;
-        g2D1.setPaint(Color.BLACK);
-        g2D1.setStroke(new BasicStroke(2));
-        //top row
-        int y1 = 40;
-        int x1 = 0;
-
-        g2D1.drawRect(0, y1, 80, 80);
-        for (int i = 0; i < 9; i++) { // left column
-            y1 += 80;
-            g2D1.drawRect(0, y1, 80, 80);
-        }
-        for (int i = 0; i < 9; i++) { // bottom row
-            x1 += 80;
-            g2D1.drawRect(x1, y1, 80, 80);
-
-        }
-        for (int i = 0; i < 9; i++) { // right column
-            y1 -= 80;
-            g2D1.drawRect(x1, y1, 80, 80);
-        }
-        for (int i = 0; i < 8; i++) { // top row
-            x1 -= 80;
-            g2D1.drawRect(x1, y1, 80, 80);
-        }
-
+    private void createUIComponents() {
+        gameBoardPanel = new GameBoardPanel();
     }
 
 
+    // Custom JPanel for game board drawing
+    class GameBoardPanel extends JPanel {
+        private static final int SQUARE_SIZE = 82; // w and h
+        private static final int BOARD_SIZE = 9;
+
+        public GameBoardPanel() {
+            setPreferredSize(new Dimension(900, 900));
+            setBackground(Color.WHITE);
+            setLayout(null); // This disables the layout manager, allowing you to use setBounds.
+
+            //Initialize and add JLabel
+            JLabel goSpace = new JLabel("GO");
+            goSpace.setBounds(702, 722, 100, 30);
+            add(goSpace);
+
+            JLabel jailSpace = new JLabel("JAIL");
+            jailSpace.setBounds(42, 722, 100, 30);
+            add(jailSpace);
+
+            JLabel parkingSpace = new JLabel("PARKING");
+            parkingSpace.setBounds(30, 66, 100, 30);
+            add(parkingSpace);
+
+            JLabel goToJailSpace = new JLabel("GO TO JAIL");
+            goToJailSpace.setBounds(679, 66, 100, 30);
+            add(goToJailSpace);
+
+            // trial button for mediterranean avenue
+            // button is currently on first tile
+            // when pressed, property details will show
+            //
+            // at some point, I want to create a loop for creating all JButtons/Dialogs, linking to the
+            //GameBoard.java instantiations
+            JButton openMediteranneanAvenue = new JButton("<html><center>Mediterranean<br>Avenue</center></html>");
+            openMediteranneanAvenue.setBounds(589, 696, 82, 82);
+            openMediteranneanAvenue.setOpaque(true);
+            openMediteranneanAvenue.setBackground(new Color(153, 102, 51));// Brown color
+            openMediteranneanAvenue.setFont(new Font("Arial", Font.BOLD, 10));
+            openMediteranneanAvenue.setMargin(new Insets(0, -14, 0, 0)); // Reduce padding
+            add(openMediteranneanAvenue);
+
+            openMediteranneanAvenue.addActionListener(e -> {
+                JDialog mediterraneanAvenue = new JDialog();
+                mediterraneanAvenue.setTitle("Property Info");
+                mediterraneanAvenue.setSize(200, 150);
+                mediterraneanAvenue.setLocationRelativeTo(null); // Center the dialog
+
+                JLabel message = new JLabel("Hello, World!", SwingConstants.CENTER);
+                mediterraneanAvenue.add(message);
+
+                mediterraneanAvenue.setVisible(true);
+            });
+
+
+            revalidate();
+            repaint();
+        }
+
+        // outline for gameboard tiles.
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2D = (Graphics2D) g;
+            g2D.setPaint(Color.BLACK);
+            g2D.setStroke(new BasicStroke(2));
+
+            int x = 15, y = 40;
+
+            // Draw left column
+            for (int i = 0; i < BOARD_SIZE; i++) {
+                g2D.drawRect(x, y + (i * SQUARE_SIZE), SQUARE_SIZE, SQUARE_SIZE);
+            }
+
+            // Draw bottom row
+            y += (BOARD_SIZE - 1) * SQUARE_SIZE;
+            for (int i = 0; i < BOARD_SIZE; i++) {
+                g2D.drawRect(x + (i * SQUARE_SIZE), y, SQUARE_SIZE, SQUARE_SIZE);
+            }
+
+            // Draw right column
+            x += (BOARD_SIZE - 1) * SQUARE_SIZE;
+            for (int i = 0; i < BOARD_SIZE; i++) {
+                g2D.drawRect(x, y - (i * SQUARE_SIZE), SQUARE_SIZE, SQUARE_SIZE);
+            }
+
+            // Draw top row
+            y -= (BOARD_SIZE - 1) * SQUARE_SIZE;
+            for (int i = 0; i < BOARD_SIZE - 1; i++) {
+                g2D.drawRect(x - (i * SQUARE_SIZE), y, SQUARE_SIZE, SQUARE_SIZE);
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        new GUI();
+        SwingUtilities.invokeLater(GUI::new);
     }
 }
