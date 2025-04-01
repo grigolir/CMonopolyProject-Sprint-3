@@ -1,3 +1,6 @@
+/**
+ * Creator: Rachele Grigoli
+ */
 package View;
 
 import javax.swing.*;
@@ -5,7 +8,8 @@ import java.awt.*;
 
 public class GUI extends JFrame {
 
-    private JPanel gameBoardPanel; // Change from GameBoardPanel to JPanel
+    private JPanel gameBoardPanel;
+    private JPanel gameStatePanel;
 
     /**
      * Initialization of GUI JPanel named gameBoardPanel
@@ -16,17 +20,25 @@ public class GUI extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Full-screen mode
         setLayout(new BorderLayout()); // Ensure layout is set
         gameBoardPanel = new GameBoardPanel();
+        gameStatePanel = new GameStatePanel();
 
         add(gameBoardPanel, BorderLayout.CENTER);
+        add(gameStatePanel, BorderLayout.EAST);
 
         setVisible(true);
     }
 
     private void createUIComponents() {
         gameBoardPanel = new GameBoardPanel();
+        gameStatePanel = new GameStatePanel();
     }
 
-
+    /**
+     * Creation of GameBoard components, including:
+     * - Chance and Community Chest Cards
+     * - Game board spaces
+     * - Buttons on board showing property details
+     */
     // Custom JPanel for game board drawing
     class GameBoardPanel extends JPanel {
         private static final int SQUARE_SIZE = 82; // w and h
@@ -53,6 +65,23 @@ public class GUI extends JFrame {
             JLabel goToJailSpace = new JLabel("GO TO JAIL");
             goToJailSpace.setBounds(679, 66, 100, 30);
             add(goToJailSpace);
+
+            JButton chanceCardDeck = new JButton("<html><center>Chance<br>Card</center></html>");
+            chanceCardDeck.setBounds(140, 160, 90, 120);
+            chanceCardDeck.setOpaque(true);
+            chanceCardDeck.setBackground(new Color(255, 165, 0));// Orange color
+            chanceCardDeck.setFont(new Font("Arial", Font.BOLD, 12));
+            chanceCardDeck.setMargin(new Insets(0, 0, 0, 0));
+            add(chanceCardDeck);
+
+            JButton communityChestDeck = new JButton("<html><center>Community<br>Chest</center></html>");
+            communityChestDeck.setBounds(140, 300, 90, 120);
+            communityChestDeck.setOpaque(true);
+            communityChestDeck.setBackground(new Color(255, 215, 0));// Gold color
+            communityChestDeck.setFont(new Font("Arial", Font.BOLD, 12));
+            communityChestDeck.setMargin(new Insets(0, -8, 0, 0));
+            add(communityChestDeck);
+
 
             // trial button for mediterranean avenue
             // button is currently on first tile
@@ -120,6 +149,21 @@ public class GUI extends JFrame {
         }
     }
 
+    /**
+     * JPanel that shows gamestate, including:
+     * - player state (name, properties owned, etc.)
+     * - each player having a section and their own buttons
+     */
+    class GameStatePanel extends JPanel {
+        public GameStatePanel() {
+            setPreferredSize(new Dimension(700, 500));
+            setBackground(new Color(228, 246, 248)); // light blue
+            setLayout(null);
+
+            revalidate();
+            repaint();
+        }
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(GUI::new);
     }
