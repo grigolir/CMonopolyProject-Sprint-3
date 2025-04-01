@@ -1,70 +1,43 @@
-/**
- * Class Created by Kristian Wright
- */
 package Model;
 
-import java.util.Objects;
+import java.util.Collections;
+import java.util.Stack;
 import java.util.function.Consumer;
 
-/**
- * Represents a Chance card in the game.
- * Each Chance card has a description and an effect that is applied to a player.
- */
-public class ChanceCard {
-    final private String description;
-    final private Consumer<Player> effect;
+public class ChanceCard extends Card {
 
-    /**
-     * Constructs a ChanceCard with the given description and effect.
-     *
-     * @param description The description of the Chance card.
-     * @param effect The effect of the Chance card, represented as a Consumer of Player.
-     */
     public ChanceCard(String description, Consumer<Player> effect) {
-        this.description = description;
-        this.effect = effect;
+        super(description, effect);
     }
 
-    /**
-     * Applies the effect of the Chance card to the given player.
-     *
-     * @param player The player to apply the effect to.
-     */
-    public void apply(Player player) {
-        effect.accept(player);
+    public static Stack<ChanceCard> initializeChanceCards() {
+        Stack<ChanceCard> chanceDeck = new Stack<>();
+        chanceDeck.add(new ChanceCard("Advance to Boardwalk.", player -> player.setPosition(39)));
+        chanceDeck.add(new ChanceCard("Advance to Go (Collect $200).", player -> {player.setPosition(0); player.increaseMoney(200);}));
+        chanceDeck.add(new ChanceCard("Advance to Illinois Avenue. If you pass Go, collect $200.", player -> {if (player.getPosition() > 24) {player.increaseMoney(200);} player.setPosition(24);}));
+        chanceDeck.add(new ChanceCard("Advance to St. Charles Place. If you pass Go, collect $200.", player -> {if (player.getPosition() > 11) {player.increaseMoney(200);} player.setPosition(11);}));
+        chanceDeck.add(new ChanceCard("Advance to the nearest Railroad. If unowned, you may buy it from the Bank. If owned, pay owner twice the rental to which they are otherwise entitled.", ChanceCard::moveToNearestRailroad));
+        chanceDeck.add(new ChanceCard("Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times amount thrown.", ChanceCard::moveToNearestUtility));
+        chanceDeck.add(new ChanceCard("Bank pays you dividend of $50.", player -> player.increaseMoney(50)));
+        chanceDeck.add(new ChanceCard("Get Out of Jail Free.", Player::receiveGetOutOfJailFreeCard));
+        chanceDeck.add(new ChanceCard("Go Back 3 Spaces.", player -> player.move(-3)));
+        chanceDeck.add(new ChanceCard("Go to Jail. Go directly to Jail, do not pass Go, do not collect $200.", Player::goToJail));
+        chanceDeck.add(new ChanceCard("Make general repairs on all your property. For each house pay $25. For each hotel pay $100.", ChanceCard::makeGeneralRepairs));
+        chanceDeck.add(new ChanceCard("Speeding fine $15.", player -> player.decreaseMoney(15)));
+        chanceDeck.add(new ChanceCard("Take a trip to Reading Railroad. If you pass Go, collect $200.", player -> {if (player.getPosition() > 5) {player.increaseMoney(200);} player.setPosition(5);}));
+        chanceDeck.add(new ChanceCard("You have been elected Chairman of the Board. Pay each player $50.", player -> ChanceCard.payEachPlayer(player, 50)));
+        chanceDeck.add(new ChanceCard("Your building loan matures. Collect $150.", player -> player.increaseMoney(150)));
+        return chanceDeck;
     }
 
-    /**
-     * Gets the description of the Chance card.
-     *
-     * @return The description of the Chance card.
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ChanceCard that = (ChanceCard) o;
-        return Objects.equals(description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(description);
+    public static void shuffleChanceCards(Stack<ChanceCard> chanceDeck) {
+        Collections.shuffle(chanceDeck);
     }
 
     // Helper methods for card actions
-
-    /**
-     * Moves the player to the nearest utility.
-     */
     public static void moveToNearestUtility(Player player) {
-        GameBoard gameBoard = player.getGameBoard();
         int currentPosition = player.getPosition();
-        int[] utilityPositions = {12, 28}; // Example positions for utilities
+        int[] utilityPositions = {12, 28};
         int nearestUtility = utilityPositions[0];
 
         for (int pos : utilityPositions) {
@@ -74,17 +47,10 @@ public class ChanceCard {
             }
         }
 
-        if (currentPosition > utilityPositions[1]) {
-            nearestUtility = utilityPositions[0];
-        }
-
         player.setPosition(nearestUtility);
         System.out.println(player.getName() + " moved to the nearest utility at position " + nearestUtility);
     }
 
-    /**
-     * Moves the player to the nearest railroad.
-     */
     public static void moveToNearestRailroad(Player player) {
         GameBoard gameBoard = player.getGameBoard();
         int nearestRailroad = gameBoard.getNearestRailroad(player.getPosition());
@@ -92,9 +58,6 @@ public class ChanceCard {
         System.out.println(player.getName() + " moved to the nearest railroad at position " + nearestRailroad);
     }
 
-    /**
-     * Makes general repairs on the player's properties.
-     */
     public static void makeGeneralRepairs(Player player) {
         int houseRepairCost = 25;
         int hotelRepairCost = 100;
@@ -112,9 +75,6 @@ public class ChanceCard {
         System.out.println(player.getName() + " paid $" + totalRepairCost + " for general repairs on their properties.");
     }
 
-    /**
-     * Pays each player a specified amount.
-     */
     public static void payEachPlayer(Player payer, int amount) {
         GameBoard gameBoard = payer.getGameBoard();
         for (Player player : gameBoard.getPlayers()) {

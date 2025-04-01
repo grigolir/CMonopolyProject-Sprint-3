@@ -1,64 +1,52 @@
-/**
- * Class Created by Kristian Wright
- */
 package Model;
 
+import java.util.Collections;
+import java.util.Stack;
 import java.util.function.Consumer;
 
-/**
- * Represents a Community Chest card in the game.
- * Each Community Chest card has a description and an effect that is applied to a player.
- */
-public class CommunityChestCard {
-    final private String description;
-    final private Consumer<Player> effect;
+public class CommunityChestCard extends Card {
+
     private GameBoard gameBoard;
 
-    /**
-     * Constructs a CommunityChestCard with the given description and effect.
-     *
-     * @param description The description of the Community Chest card.
-     * @param effect The effect of the Community Chest card, represented as a Consumer of Player.
-     */
     public CommunityChestCard(String description, Consumer<Player> effect) {
-        this.description = description;
-        this.effect = effect;
+        super(description, effect);
     }
 
-    /**
-     * Sets the game board for the Community Chest card.
-     *
-     * @param gameBoard The game board to set.
-     */
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
     }
 
-    /**
-     * Applies the effect of the Community Chest card to the given player.
-     *
-     * @param player The player to apply the effect to.
-     */
-    public void apply(Player player) {
-        effect.accept(player);
+    public static Stack<CommunityChestCard> initializeCommunityChestCards(GameBoard gameBoard) {
+        Stack<CommunityChestCard> communityDeck = new Stack<>();
+        communityDeck.add(new CommunityChestCard("Advance to Go (Collect $200).", player -> {player.setPosition(0); player.increaseMoney(200);}));
+        communityDeck.add(new CommunityChestCard("Bank error in your favor. Collect $200.", player -> player.increaseMoney(200)));
+        communityDeck.add(new CommunityChestCard("Doctor’s fee. Pay $50.", player -> player.decreaseMoney(50)));
+        communityDeck.add(new CommunityChestCard("From sale of stock you get $50.", player -> player.increaseMoney(50)));
+        communityDeck.add(new CommunityChestCard("Get Out of Jail Free.", Player::receiveGetOutOfJailFreeCard));
+        communityDeck.add(new CommunityChestCard("Go to Jail. Go directly to jail, do not pass Go, do not collect $200.", Player::goToJail));
+        communityDeck.add(new CommunityChestCard("Holiday fund matures. Receive $100.", player -> player.increaseMoney(100)));
+        communityDeck.add(new CommunityChestCard("Income tax refund. Collect $20.", player -> player.increaseMoney(20)));
+        communityDeck.add(new CommunityChestCard("It is your birthday. Collect $10 from every player.", _ -> {
+            CommunityChestCard card = new CommunityChestCard("", null);
+            card.setGameBoard(gameBoard);
+            card.collectFromEachPlayer(10);
+        }));
+        communityDeck.add(new CommunityChestCard("Life insurance matures. Collect $100.", player -> player.increaseMoney(100)));
+        communityDeck.add(new CommunityChestCard("Pay hospital fees of $100.", player -> player.decreaseMoney(100)));
+        communityDeck.add(new CommunityChestCard("Pay school fees of $50.", player -> player.decreaseMoney(50)));
+        communityDeck.add(new CommunityChestCard("Receive $25 consultancy fee.", player -> player.increaseMoney(25)));
+        communityDeck.add(new CommunityChestCard("You are assessed for street repair. $40 per house. $115 per hotel.", _ -> {
+            // Implement the assessStreetRepairs logic here
+        }));
+        communityDeck.add(new CommunityChestCard("You have won second prize in a beauty contest. Collect $10.", player -> player.increaseMoney(10)));
+        communityDeck.add(new CommunityChestCard("You inherit $100.", player -> player.increaseMoney(100)));
+        return communityDeck;
     }
 
-    /**
-     * Gets the description of the Community Chest card.
-     *
-     * @return The description of the Community Chest card.
-     */
-    public String getDescription() {
-        return description;
+    public static void shuffleCommunityChestCards(Stack<CommunityChestCard> communityDeck) {
+        Collections.shuffle(communityDeck);
     }
 
-    // Helper methods for card actions
-
-    /**
-     * Collects a specified amount from each player.
-     *
-     * @param amount The amount to collect from each player.
-     */
     public void collectFromEachPlayer(int amount) {
         for (Player player : gameBoard.getPlayers()) {
             player.decreaseMoney(amount);

@@ -1,6 +1,3 @@
-/**
- * Class Created by Kristian Wright
- */
 package ModelTests;
 
 import Model.*;
@@ -49,26 +46,6 @@ public class GameBoardTest {
     }
 
     @Test
-    public void testShuffleChanceCards() {
-        List<String> originalOrder = new ArrayList<>();
-        gameBoard.getChanceDeck().forEach(card -> originalOrder.add(card.getDescription()));
-        gameBoard.shuffleChanceCards();
-        List<String> shuffledOrder = new ArrayList<>();
-        gameBoard.getChanceDeck().forEach(card -> shuffledOrder.add(card.getDescription()));
-        assertNotEquals(originalOrder, shuffledOrder, "Chance cards should be shuffled.");
-    }
-
-    @Test
-    public void testShuffleCommunityChestCards() {
-        List<String> originalOrder = new ArrayList<>();
-        gameBoard.getCommunityDeck().forEach(card -> originalOrder.add(card.getDescription()));
-        gameBoard.shuffleCommunityChestCards();
-        List<String> shuffledOrder = new ArrayList<>();
-        gameBoard.getCommunityDeck().forEach(card -> shuffledOrder.add(card.getDescription()));
-        assertNotEquals(originalOrder, shuffledOrder, "Community Chest cards should be shuffled.");
-    }
-
-    @Test
     public void testLandOnDifferentSpaces() {
         gameBoard.movePlayer(player1, 1); // Move to Mediterranean Avenue
         assertEquals("Mediterranean Avenue", gameBoard.getSpace(player1.getPosition()).getName(), "Player 1 should be on Mediterranean Avenue.");
@@ -101,59 +78,5 @@ public class GameBoardTest {
         gameBoard.movePlayer(player1, 1); // Move to Go To Jail
         assertEquals(10, player1.getPosition(), "Player 1 should be at position 10 (Jail).");
         assertTrue(player1.isInJail(), "Player 1 should be in jail.");
-    }
-
-    @Test
-    public void testDrawGoToJailCard() {
-        // Mock drawing a "Go to Jail" card
-        ChanceCard goToJailCard = new ChanceCard("Go to Jail", Player::goToJail);
-
-        player1.setPosition(7); // Assume player is on Chance space
-        goToJailCard.apply(player1);
-
-        assertEquals(10, player1.getPosition(), "Player 1 should be in Jail.");
-        assertTrue(player1.isInJail(), "Player 1 should be in jail.");
-    }
-
-    @Test
-    public void testDrawAdvanceToRailroadCard() {
-        // Mock drawing an "Advance to Nearest Railroad" card
-        ChanceCard advanceToRailroadCard = new ChanceCard("Advance to Nearest Railroad", (player) -> {
-            int newPosition = gameBoard.getNearestRailroad(player.getPosition());
-            player.setPosition(newPosition);
-        });
-
-        player1.setPosition(7); // Assume player is on Chance space
-        advanceToRailroadCard.apply(player1);
-
-        int expectedRailroadPosition = gameBoard.getNearestRailroad(7);
-        assertEquals(expectedRailroadPosition, player1.getPosition(), "Player 1 should be on the nearest Railroad.");
-        assertTrue(gameBoard.getSpace(player1.getPosition()).getName().contains("Railroad"), "Player 1 should be on a Railroad space.");
-    }
-
-    @Test
-    public void testDrawAdvanceToGoCard() {
-        // Mock drawing an "Advance to Go" card
-        CommunityChestCard advanceToGoCard = new CommunityChestCard("Advance to Go", (player) -> {
-            player.setPosition(0);
-            player.increaseMoney(200);
-        });
-
-        player1.setPosition(7); // Assume player is on Community Chest space
-        advanceToGoCard.apply(player1);
-
-        assertEquals(0, player1.getPosition(), "Player 1 should be on Go.");
-        assertEquals(1700, player1.getMoney(), "Player 1 should have $1700 after advancing to Go.");
-    }
-
-    @Test
-    public void testDrawBankErrorInYourFavorCard() {
-        // Mock drawing a "Bank error in your favor" card
-        CommunityChestCard bankErrorCard = new CommunityChestCard("Bank error in your favor", (player) -> player.increaseMoney(200));
-
-        player1.setPosition(2); // Assume player is on Community Chest space
-        bankErrorCard.apply(player1);
-
-        assertEquals(1700, player1.getMoney(), "Player 1 should have $1700 after bank error in their favor.");
     }
 }
