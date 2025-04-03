@@ -45,8 +45,8 @@ public class PropertySpace extends Space {
     }
 
     public int calculateRent() {
-        // Example rent calculation logic
-        return price / 10;
+        // Example rent calculation logic using the fields
+        return propertySite + propertySiteWithColorSet + costWithOneHouse + costWithTwoHouses + costWithThreeHouses + costWithFourHouses + costWithHotel;
     }
 
     public void buy(Player player) {
@@ -67,5 +67,42 @@ public class PropertySpace extends Space {
 
     public int getPrice() {
         return price;
+    }
+
+    // Getter methods for the fields
+    public int getPropertySite() {
+        return propertySite;
+    }
+
+    public int getPropertySiteWithColorSet() {
+        return propertySiteWithColorSet;
+    }
+
+    public int getCostWithOneHouse() {
+        return costWithOneHouse;
+    }
+
+    public int getCostWithTwoHouses() {
+        return costWithTwoHouses;
+    }
+
+    public int getCostWithThreeHouses() {
+        return costWithThreeHouses;
+    }
+
+    public int getCostWithFourHouses() {
+        return costWithFourHouses;
+    }
+
+    public int getCostWithHotel() {
+        return costWithHotel;
+    }
+
+    public int getMortgageValue() {
+        return mortgageValue;
+    }
+
+    public int getCostOfHouseHotel() {
+        return costOfHouseHotel;
     }
 }

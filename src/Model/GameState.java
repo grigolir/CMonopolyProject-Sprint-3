@@ -73,4 +73,30 @@ public class GameState {
         this.gameOver = true;
         System.out.println("Game Over!");
     }
+
+    // Interface methods for Controller and View
+
+    public GameBoard getBoard() {
+        return board;
+    }
+
+    public Dice getDice() {
+        return dice;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    public void setCurrentPlayerIndex(int currentPlayerIndex) {
+        this.currentPlayerIndex = currentPlayerIndex;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
 }
