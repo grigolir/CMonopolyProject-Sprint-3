@@ -5,7 +5,7 @@
  * It tests the initialization of the board, player movement, starting money distribution,
  * and various space interactions.
 
- * Created by Kristian Wright
+ * Created by Kristian Wright modified by Collin Cabral-Castro
 
  */
 
