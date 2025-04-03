@@ -1,3 +1,10 @@
+/*
+ * CommunityChestSpace.java
+ *
+ * This class represents a space on the game board that allows players to draw a Community Chest card.
+ *
+ * Remodeled by Finn Dempsey
+ */
 package Model;
 
 public class CommunityChestSpace extends Space {

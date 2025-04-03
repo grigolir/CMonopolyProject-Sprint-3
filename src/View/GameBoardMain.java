@@ -1,6 +1,11 @@
 /**
  * Class Created by Kristian Wright
+
+ * This is the main class for testing the GameBoard and GameBoardView classes.
+ * It creates a GameBoard object with two players, sets the game board for each player,
+ * and then uses the GameBoardView to display the game board and player status.
  */
+
 package View;
 
 import Model.GameBoard;
@@ -21,7 +26,7 @@ public class GameBoardMain {
         players.add(player2);
 
         // Create a game board with the list of players
-        GameBoard gameBoard = new GameBoard(players);
+        GameBoard gameBoard = new GameBoard(players, false);
 
         // Set the game board for each player
         player1.setGameBoard(gameBoard);

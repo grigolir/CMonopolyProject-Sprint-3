@@ -1,3 +1,11 @@
+/*
+ * PropertySpace.java
+ *
+ * This class represents a property space on the board in a Monopoly-like game.
+ * It includes attributes for pricing, rent calculation, and ownership.
+ *
+ * Created by Kristian Wright
+ */
 package Model;
 
 public class PropertySpace extends Space {

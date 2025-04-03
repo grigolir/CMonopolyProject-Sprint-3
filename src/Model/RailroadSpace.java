@@ -1,3 +1,11 @@
+/*
+ * RailroadSpace.java
+ *
+ * This class represents a railroad space on the board in a Monopoly-like game.
+ * It extends the Space class and includes properties and methods specific to railroad spaces.
+ *
+ * Remodeled by Finn Dempsey
+ */
 package Model;
 
 public class RailroadSpace extends Space {

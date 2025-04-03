@@ -1,3 +1,11 @@
+/*
+ * TaxSpace.java
+ *
+ * This class represents a tax space on the board in a Monopoly-like game.
+ * When a player lands on this space, they will pay a specified tax amount.
+ *
+ * Remodeled by Finn Dempsey
+ */
 package Model;
 
 public class TaxSpace extends Space {

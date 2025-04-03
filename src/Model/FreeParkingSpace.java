@@ -1,3 +1,10 @@
+/*
+ * FreeParkingSpace.java
+ *
+ * This class represents a Free Parking space in a board game.
+ *
+ * Remodeled by Finn Dempsey
+ */
 package Model;
 
 public class FreeParkingSpace extends Space {

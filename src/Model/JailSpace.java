@@ -1,3 +1,11 @@
+/*
+ * JailSpace.java
+ *
+ * This class represents the Jail space on a Monopoly board.
+ * It extends the Space class and implements the logic for landing on Jail.
+ *
+ * Remodeled by Finn Dempsey
+ */
 package Model;
 
 import java.util.ArrayList;

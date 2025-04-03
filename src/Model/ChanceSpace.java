@@ -1,3 +1,9 @@
+/*
+ * This file is part of the Monopoly game implementation.
+ * It defines the ChanceSpace class which represents a space on the board where players can draw a chance card.
+*
+*  Remodeled by Finn Dempsey
+ */
 package Model;
 
 public class ChanceSpace extends Space {

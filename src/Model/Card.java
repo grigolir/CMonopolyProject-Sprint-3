@@ -1,3 +1,10 @@
+/*
+ * Card.java
+ *
+ * This class represents a card in the game. It contains a description and an effect that can be applied to a player.
+ *
+ * Created by Kristian Wright.
+ */
 package Model;
 
 import java.util.function.Consumer;

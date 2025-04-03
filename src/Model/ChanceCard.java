@@ -1,3 +1,12 @@
+/*
+ * ChanceCard.java
+ *
+ * This class represents a chance card in the Monopoly game.
+ * It extends the Card class and provides various chance card effects.
+ *
+ * Created by Kristian Wright
+ */
+
 package Model;
 
 import java.util.Collections;

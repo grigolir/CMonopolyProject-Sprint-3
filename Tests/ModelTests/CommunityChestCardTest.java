@@ -1,3 +1,12 @@
+/**
+ * CommunityChestCardTest.java
+ * This file contains unit tests for the CommunityChestCard class in the Monopoly game model.
+ * It tests the shuffling of Community Chest cards and the application of specific cards.
+
+ * Created by Kristian Wright
+
+ */
+
 package ModelTests;
 
 import Model.CommunityChestCard;
@@ -11,20 +20,31 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for the CommunityChestCard class.
+ */
 public class CommunityChestCardTest {
     private GameBoard gameBoard;
     private Player player1;
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes a new GameBoard object and two Player objects.
+     */
     @BeforeEach
     public void setUp() {
         List<Player> players = new ArrayList<>();
-        gameBoard = new GameBoard(players);
+        gameBoard = new GameBoard(players, true); // Create a GameBoard in test mode
         player1 = new Player("Player 1", "Token1", gameBoard);
         Player player2 = new Player("Player 2", "Token2", gameBoard);
         players.add(player1);
         players.add(player2);
     }
 
+    /**
+     * Tests the shuffling of Community Chest cards.
+     * Verifies that the order of the cards is changed after shuffling.
+     */
     @Test
     public void testShuffleCommunityChestCards() {
         List<String> originalOrder = new ArrayList<>();
@@ -38,6 +58,10 @@ public class CommunityChestCardTest {
         assertNotEquals(originalOrder, shuffledOrder, "Community Chest cards should be shuffled.");
     }
 
+    /**
+     * Tests drawing the "Advance to Go" Community Chest card.
+     * Verifies that the player's position and money are updated correctly.
+     */
     @Test
     public void testDrawAdvanceToGoCard() {
         CommunityChestCard advanceToGoCard = new CommunityChestCard("Advance to Go", (player) -> {
@@ -52,6 +76,10 @@ public class CommunityChestCardTest {
         assertEquals(1700, player1.getMoney(), "Player 1 should have $1700 after advancing to Go.");
     }
 
+    /**
+     * Tests drawing the "Bank error in your favor" Community Chest card.
+     * Verifies that the player's money is updated correctly.
+     */
     @Test
     public void testDrawBankErrorInYourFavorCard() {
         CommunityChestCard bankErrorCard = new CommunityChestCard("Bank error in your favor", (player) -> player.increaseMoney(200));

@@ -1,3 +1,10 @@
+/*
+ * Player class represents a player in the Monopoly game.
+ * It contains attributes like name, token, money, position on the board,
+ * properties owned, jail status, and methods to move, go to jail, and manage properties.
+ *
+ * Created by Kristian Wright
+ */
 package Model;
 
 import java.util.*;

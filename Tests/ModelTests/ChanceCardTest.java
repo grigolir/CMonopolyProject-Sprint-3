@@ -1,3 +1,13 @@
+/**
+ * ChanceCardTest.java
+
+ * This file contains unit tests for the ChanceCard class in the Monopoly game model.
+ * It tests the shuffle and application of chance cards.
+
+ * Created by Kristian Wright
+
+ */
+
 package ModelTests;
 
 import Model.ChanceCard;
@@ -11,20 +21,31 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for the ChanceCard class.
+ */
 public class ChanceCardTest {
     private GameBoard gameBoard;
     private Player player1;
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes a new GameBoard object and two Player objects.
+     */
     @BeforeEach
     public void setUp() {
         List<Player> players = new ArrayList<>();
-        gameBoard = new GameBoard(players);
+        gameBoard = new GameBoard(players , true); // Create a GameBoard in test mode
         player1 = new Player("Player 1", "Token1", gameBoard);
         Player player2 = new Player("Player 2", "Token2", gameBoard);
         players.add(player1);
         players.add(player2);
     }
 
+    /**
+     * Tests the shuffling of Chance cards.
+     * Verifies that the order of the cards is changed after shuffling.
+     */
     @Test
     public void testShuffleChanceCards() {
         List<String> originalOrder = new ArrayList<>();
@@ -38,6 +59,10 @@ public class ChanceCardTest {
         assertNotEquals(originalOrder, shuffledOrder, "Chance cards should be shuffled.");
     }
 
+    /**
+     * Tests drawing the "Go to Jail" Chance card.
+     * Verifies that the player's position and jail status are updated correctly.
+     */
     @Test
     public void testDrawGoToJailCard() {
         ChanceCard goToJailCard = new ChanceCard("Go to Jail", Player::goToJail);
@@ -49,6 +74,10 @@ public class ChanceCardTest {
         assertTrue(player1.isInJail(), "Player 1 should be in jail.");
     }
 
+    /**
+     * Tests drawing the "Advance to Nearest Railroad" Chance card.
+     * Verifies that the player's position is updated correctly.
+     */
     @Test
     public void testDrawAdvanceToRailroadCard() {
         ChanceCard advanceToRailroadCard = new ChanceCard("Advance to Nearest Railroad", (player) -> {

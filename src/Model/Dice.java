@@ -1,6 +1,11 @@
 /**
- * Class Created by Finn Dempsey and Refactored by Kristian Wright
+ * Created by Finn Dempsey
+ * Refactored by Kristian Wright
+
+ * This class represents a Die object used in the game.
+ * It provides functionality to roll two dice and keep track of the number of doubles rolled.
  */
+
 package Model;
 
 import java.util.ArrayList;

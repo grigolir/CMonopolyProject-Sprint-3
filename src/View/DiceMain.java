@@ -1,5 +1,9 @@
 /**
  * Class Created by Kristian Wright
+
+ * This is the main class for testing the Dice and DiceView classes.
+ * It creates a Die object and a DiceView object, rolls the dice until 3 doubles are rolled,
+ * and then resets the doubles rolled count.
  */
 package View;
 

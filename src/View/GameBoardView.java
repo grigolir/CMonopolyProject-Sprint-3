@@ -1,6 +1,10 @@
 /**
  * Class Created by Kristian Wright
+
+ * This class is responsible for displaying the game board and player status.
+ * It uses the GameBoard object to retrieve information about the spaces and players.
  */
+
 package View;
 
 import Model.GameBoard;
@@ -16,7 +20,7 @@ public class GameBoardView {
     }
 
     public void displayBoard() {
-        System.out.println("Game Board:");
+        System.out.println("Displaying game board...");
         for (int i = 0; i < gameBoard.getSpaces().size(); i++) {
             Space space = gameBoard.getSpace(i);
             StringBuilder spaceInfo = new StringBuilder(i + ": " + space.getName());
@@ -39,12 +43,24 @@ public class GameBoardView {
 
             System.out.println(spaceInfo);
         }
+        System.out.println("Finished displaying game board.");
     }
 
     public void displayPlayerStatus() {
-        System.out.println("Player Status:");
+        System.out.println("Displaying player status...");
         for (Player player : gameBoard.getPlayers()) {
-            System.out.println(player.getName() + " - Position: " + player.getPosition() + ", Money: $" + player.getMoney());
+            StringBuilder playerInfo = new StringBuilder(player.getName() + " - Position: " + player.getPosition() + ", Money: $" + player.getMoney());
+            if (player.isInJail()) {
+                playerInfo.append(", In Jail");
+            }
+            playerInfo.append(", Properties: ");
+            for (Space space : gameBoard.getSpaces()) {
+                if (space instanceof PropertySpace property && property.getOwner() == player) {
+                    playerInfo.append(property.getName()).append(", ");
+                }
+            }
+            System.out.println(playerInfo);
         }
+        System.out.println("Finished displaying player status.");
     }
 }

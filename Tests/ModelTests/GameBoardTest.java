@@ -1,3 +1,14 @@
+/**
+ * GameBoardTest.java
+
+ * This file contains unit tests for the GameBoard class in the Monopoly game model.
+ * It tests the initialization of the board, player movement, starting money distribution,
+ * and various space interactions.
+
+ * Created by Kristian Wright
+
+ */
+
 package ModelTests;
 
 import Model.*;
@@ -9,25 +20,40 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for the GameBoard class.
+ */
 public class GameBoardTest {
     private GameBoard gameBoard;
     private Player player1;
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes a new GameBoard object and two Player objects.
+     */
     @BeforeEach
     public void setUp() {
         List<Player> players = new ArrayList<>();
-        gameBoard = new GameBoard(players);
+        gameBoard = new GameBoard(players, true); // Create a GameBoard in test mode
         player1 = new Player("Player 1", "Token1", gameBoard);
         Player player2 = new Player("Player 2", "Token2", gameBoard);
         players.add(player1);
         players.add(player2);
     }
 
+    /**
+     * Tests the initialization of the game board.
+     * Verifies that the board has 40 spaces.
+     */
     @Test
     public void testInitializeBoard() {
         assertEquals(40, gameBoard.getSpaces().size(), "The board should have 40 spaces.");
     }
 
+    /**
+     * Tests the movement of a player on the board.
+     * Verifies the player's position and money after moving.
+     */
     @Test
     public void testMovePlayer() {
         gameBoard.movePlayer(player1, 5);
@@ -37,6 +63,10 @@ public class GameBoardTest {
         assertEquals(1700, player1.getMoney(), "Player 1 should have $1700 after passing Go.");
     }
 
+    /**
+     * Tests the distribution of starting money to players.
+     * Verifies that each player has $1500 at the start.
+     */
     @Test
     public void testDistributeStartingMoney() {
         gameBoard.distributeStartingMoney();
@@ -45,6 +75,10 @@ public class GameBoardTest {
         }
     }
 
+    /**
+     * Tests landing on different spaces on the board.
+     * Verifies the player's position and the name of the space they land on.
+     */
     @Test
     public void testLandOnDifferentSpaces() {
         gameBoard.movePlayer(player1, 1); // Move to Mediterranean Avenue
@@ -64,6 +98,10 @@ public class GameBoardTest {
         assertEquals(5, player1.getPosition(), "Player 1 should be at position 5.");
     }
 
+    /**
+     * Tests a player passing the Go space.
+     * Verifies the player's position and money after passing Go.
+     */
     @Test
     public void testPlayerPassesGo() {
         player1.setPosition(38);
@@ -72,6 +110,10 @@ public class GameBoardTest {
         assertEquals(1700, player1.getMoney(), "Player 1 should have $1700 after passing Go.");
     }
 
+    /**
+     * Tests a player landing on the GoToJail space.
+     * Verifies the player's position and jail status after landing on Go To Jail.
+     */
     @Test
     public void testPlayerLandsOnGoToJail() {
         player1.setPosition(29);

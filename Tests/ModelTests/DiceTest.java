@@ -1,6 +1,11 @@
 /**
  * Class Created by Kristian Wright
+
+ * This is the test class for the Dice class.
+ * It contains unit tests to verify the functionality of the Dice class, including rolling the dice,
+ * tracking doubles rolled, and ensuring the dice roll results are within the valid range.
  */
+
 package ModelTests;
 
 import Model.Dice;
@@ -26,7 +31,7 @@ public class DiceTest {
     @BeforeEach
     public void setUp() {
         dice = new Dice();
-        GameBoard gameBoard = new GameBoard(new ArrayList<>());
+        GameBoard gameBoard = new GameBoard(new ArrayList<>(), true);  // or false, depending on the use case
         player = new Player("TestPlayer", "Car", gameBoard);
     }
 

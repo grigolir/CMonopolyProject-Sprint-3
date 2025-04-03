@@ -1,3 +1,12 @@
+/*
+ * GameState.java
+ *
+ * This class represents the state of the game, including the game board, players, and dice.
+ * It handles the logic for player turns, jail conditions, and determining the current player.
+ *
+ * Fixed by Collin Castro and refactored by Kristian Wright
+ */
+
 package Model;
 
 import java.util.List;

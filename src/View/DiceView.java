@@ -1,5 +1,10 @@
 /**
  * Class Created by Kristian Wright
+
+ * This class is responsible for displaying the results of rolling the dice and managing the doubles rolled count.
+ * It uses the Dice class to perform the actual rolling and keeps track of the results.
+ * This class also provides methods to display the roll results, the current count of doubles rolled, and to reset the doubles rolled count.
+ *
  */
 package View;
 

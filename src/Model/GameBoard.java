@@ -1,3 +1,12 @@
+/*
+ * GameBoard.java
+ *
+ * This class represents the game board for a Monopoly-like game.
+ * It initializes the spaces, decks, and players, and handles player movements.
+ *
+ * Remodeled by Finn Dempsey, Collin Castro, and Kristian Wright
+ */
+
 package Model;
 
 import java.util.*;
@@ -7,9 +16,11 @@ public class GameBoard {
     private final Stack<ChanceCard> chanceDeck;
     private final Stack<CommunityChestCard> communityDeck;
     private final List<Player> players;
+    private final boolean isTestMode;
 
-    public GameBoard(List<Player> players) {
+    public GameBoard(List<Player> players, boolean isTestMode) {
         this.players = players;
+        this.isTestMode = isTestMode;
         this.spaces = new ArrayList<>();
         this.chanceDeck = ChanceCard.initializeChanceCards();
         this.communityDeck = CommunityChestCard.initializeCommunityChestCards(this);
@@ -42,7 +53,7 @@ public class GameBoard {
         spaces.add(new ChanceSpace());
         spaces.add(new PropertySpace("Indiana Avenue", 23, "Red", 220, 18, 36, 90, 250, 700, 875, 1050, 110, 150));
         spaces.add(new PropertySpace("Illinois Avenue", 24, "Red", 240, 20, 40, 100, 300, 750, 925, 1100, 120, 150));
-        spaces.add(new RailroadSpace("B & O Railroad", 25, 200, 25, 50, 100, 200, 100));
+        spaces.add(new RailroadSpace("B&O Railroad", 25, 200, 25, 50, 100, 200, 100));
         spaces.add(new PropertySpace("Atlantic Avenue", 26, "Yellow", 260, 22, 44, 110, 330, 800, 975, 1150, 130, 150));
         spaces.add(new PropertySpace("Ventnor Avenue", 27, "Yellow", 260, 22, 44, 110, 330, 800, 975, 1150, 130, 150));
         spaces.add(new UtilitySpace("Water Works", 28, 150, 75));
@@ -52,15 +63,19 @@ public class GameBoard {
         spaces.add(new PropertySpace("North Carolina Avenue", 32, "Green", 300, 26, 52, 130, 390, 900, 1100, 1275, 150, 200));
         spaces.add(new CommunityChestSpace());
         spaces.add(new PropertySpace("Pennsylvania Avenue", 34, "Green", 320, 28, 56, 150, 450, 1000, 1200, 1400, 160, 200));
-        spaces.add(new RailroadSpace("Short Line Railroad", 35, 200, 25, 50, 100, 200, 100));
+        spaces.add(new RailroadSpace("Short Line", 35, 200, 25, 50, 100, 200, 100));
         spaces.add(new ChanceSpace());
-        spaces.add(new PropertySpace("Park Place", 37, "Blue", 350, 35, 70, 175, 500, 1100, 1300, 1500, 175, 200));
-        spaces.add(new TaxSpace("Luxury Tax", 38, 75));
-        spaces.add(new PropertySpace("Boardwalk", 39, "Blue", 400, 50, 100, 200, 600, 1400, 1700, 2000, 200, 200));
+        spaces.add(new PropertySpace("Park Place", 37, "Dark Blue", 350, 35, 70, 175, 500, 1100, 1300, 1500, 175, 200));
+        spaces.add(new TaxSpace("Luxury Tax", 38, 100));
+        spaces.add(new PropertySpace("Boardwalk", 39, "Dark Blue", 400, 50, 100, 200, 600, 1400, 1700, 2000, 200, 200));
 
         ChanceCard.shuffleChanceCards(chanceDeck);
         CommunityChestCard.shuffleCommunityChestCards(communityDeck);
-        assignTokensToPlayers();
+
+        if (!isTestMode) {
+            assignTokensToPlayers();
+        }
+
         distributeStartingMoney();
     }
 
@@ -70,8 +85,15 @@ public class GameBoard {
                 "Scottie dog", "The Shoe", "Boot", "Ducky", "Horse & Rider",
                 "Penguin", "Race car", "Train", "Wheelbarrow"
         ));
-        Scanner scanner = new Scanner(System.in);
 
+        if (isTestMode) {
+            for (int i = 0; i < players.size(); i++) {
+                players.get(i).setToken(availableTokens.get(i % availableTokens.size()));
+            }
+            return;
+        }
+
+        Scanner scanner = new Scanner(System.in);
         for (Player player : players) {
             System.out.println(player.getName() + ", choose your token from the following list:");
             for (int j = 0; j < availableTokens.size(); j++) {

@@ -3,7 +3,12 @@ package Model;
 /**
  * Represents a property in the Monopoly game.
  * Each property has a name, price, base rent, color group, and ownership status.
+ * This class extends the Space class and implements the logic for buying properties,
+ * paying rent, mortgaging, and unmortgaging.
+
+ * Created by Kristian Wright
  */
+
 public class Property extends Space {
     final private String name;
     final private int price;

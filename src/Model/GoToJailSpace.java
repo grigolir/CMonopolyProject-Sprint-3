@@ -1,3 +1,10 @@
+/*
+ * GoToJailSpace.java
+ *
+ * Represents a space on the board that sends a player to jail when landed on.
+ *
+ * Remodeled by Finn Dempsey
+ */
 package Model;
 
 public class GoToJailSpace extends Space {

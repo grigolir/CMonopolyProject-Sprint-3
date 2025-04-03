@@ -1,3 +1,11 @@
+/*
+*  CommunityChestCard.java
+*
+* This class represents a Community Chest card in the game. It extends the Card class and provides specific implementations for various community chest cards.
+*
+* Created by Kristian Wright.
+*/
+
 package Model;
 
 import java.util.Collections;
