@@ -68,8 +68,7 @@ public class GameBoardTest {
      * Verifies that each player has $1500 at the start.
      */
     @Test
-    public void testDistributeStartingMoney() {
-        gameBoard.distributeStartingMoney();
+    public void testStartingMoney() {
         for (Player player : gameBoard.getPlayers()) {
             assertEquals(1500, player.getMoney(), player.getName() + " should have $1500 at the start.");
         }

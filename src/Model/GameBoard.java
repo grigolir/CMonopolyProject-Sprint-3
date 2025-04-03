@@ -75,8 +75,6 @@ public class GameBoard {
         if (!isTestMode) {
             assignTokensToPlayers();
         }
-
-        distributeStartingMoney();
     }
 
     public void assignTokensToPlayers() {
@@ -113,12 +111,6 @@ public class GameBoard {
             String chosenToken = availableTokens.remove(choice - 1);
             player.setToken(chosenToken);
             System.out.println(player.getName() + " has chosen the " + chosenToken + " token.");
-        }
-    }
-
-    public void distributeStartingMoney() {
-        for (Player player : players) {
-            player.setMoney(1500);
         }
     }
 
