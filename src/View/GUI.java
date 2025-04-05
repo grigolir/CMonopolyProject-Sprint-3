@@ -1,15 +1,23 @@
 /**
  * Creator: Rachele Grigoli
+ *
+ * This class represents the GUI of the interactive monopoly game at play
+ *
+ * TODO: figure out how to import Dice class from Model, and delete temporary dice buttons
+ * try to resolve Model import issue 
  */
 package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class GUI extends JFrame {
 
     private JPanel gameBoardPanel;
     private JPanel gameStatePanel;
+
 
     /**
      * Initialization of GUI JPanel named gameBoardPanel
@@ -151,19 +159,81 @@ public class GUI extends JFrame {
 
     /**
      * JPanel that shows gamestate, including:
-     * - player state (name, properties owned, etc.)
-     * - each player having a section and their own buttons
+     * - player state (name, buttons, etc. [anything else to add at the moment?])
+     *      -> each player has their own set of buttons
+     *      -> can change playerCount final int
+     *      -> currently has a temporary playerName List
      */
     class GameStatePanel extends JPanel {
+
+        final int playerCount = 4;
+        List<String> playerNames = Arrays.asList("Stacy", "Alex", "Jamie", "Jordan");
+
         public GameStatePanel() {
             setPreferredSize(new Dimension(700, 500));
-            setBackground(new Color(228, 246, 248)); // light blue
+            setBackground(new Color(217, 233, 211)); // light green
             setLayout(null);
+
+            int x = 50;
+            int y = 60;
+            for (int i = 0; i < playerCount; i++) {
+                String[] buttonLabels = {
+                        "Role Dice", "Draw Card", "Purchase Property", "Purchase House", "End Turn"
+                };
+                for (String label : buttonLabels) {
+                    add(createButton(label, x, y));
+                    x += 120; // next button's positioning
+                }
+                JLabel name = new JLabel(playerNames.get(i));
+                name.setFont(new Font("Arial", Font.BOLD, 16));
+                name.setBounds(30, y - 38, 300, 30);
+                add(name);
+
+                x = 50; // resetting x value
+                y += 200; // next row of button's positioning
+            }
 
             revalidate();
             repaint();
         }
+
+        private JButton createButton(String text, int x, int y) {
+            JButton button = new JButton(text);
+            button.setBounds(x, y, 120, 20);
+            button.setFont(new Font("Arial", Font.BOLD, 12));
+
+            if (text.equals("Role Dice")) {
+                button.addActionListener(e -> {
+                    int roll = (int) (Math.random() * 6) + 1;
+                    JOptionPane.showMessageDialog(this, "You rolled a " + roll + "!");
+                });
+            }
+
+            return button;
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2D = (Graphics2D) g;
+            g2D.setPaint(Color.BLACK);
+            g2D.setStroke(new BasicStroke(2));
+
+            int boxWidth = getWidth() - 60;
+            int boxHeight = 150;
+            int x = 30;
+            int y = 50;
+
+            for (int i = 0; i < playerCount; i++) {
+                g2D.drawRect(x, y, boxWidth, boxHeight);
+                g2D.drawLine(x, y + 40, boxWidth + 30, y + 40);
+                y += boxHeight + 50;
+            }
+        }
+
     }
+
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(GUI::new);
     }
