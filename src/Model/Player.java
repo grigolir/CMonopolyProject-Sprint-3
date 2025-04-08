@@ -132,24 +132,6 @@ public class Player {
     }
 
     /**
-     * Increases the player's money by the specified amount.
-     *
-     * @param amount the amount to increase the player's money by
-     */
-    public void increaseMoney(int amount) {
-        money += amount;
-    }
-
-    /**
-     * Decreases the player's money by the specified amount.
-     *
-     * @param amount the amount to decrease the player's money by
-     */
-    public void decreaseMoney(int amount) {
-        money -= amount;
-    }
-
-    /**
      * Returns whether the player is in jail.
      *
      * @return true if the player is in jail, false otherwise

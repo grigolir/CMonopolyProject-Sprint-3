@@ -1,5 +1,5 @@
 /**
- * Class Created by Kristian Wright
+ * Class Created by Kristian Wright Modified by Collin Cabral-Castro.
 
  * This is the test class for the Dice class.
  * It contains unit tests to verify the functionality of the Dice class, including rolling the dice,
@@ -8,6 +8,7 @@
 
 package ModelTests;
 
+import Model.Bank;
 import Model.Dice;
 import Model.GameBoard;
 import Model.Player;
@@ -31,7 +32,8 @@ public class DiceTest {
     @BeforeEach
     public void setUp() {
         dice = new Dice();
-        GameBoard gameBoard = new GameBoard(new ArrayList<>(), true);  // or false, depending on the use case
+        Bank bank = new Bank(new ArrayList<>());
+        GameBoard gameBoard = new GameBoard(new ArrayList<>(), true, bank);  // or false, depending on the use case
         player = new Player("TestPlayer", "Car", gameBoard);
     }
 

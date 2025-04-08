@@ -20,31 +20,21 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Test class for the GameBoard class.
- */
 public class GameBoardTest {
     private GameBoard gameBoard;
     private Player player1;
 
-    /**
-     * Sets up the test environment before each test.
-     * Initializes a new GameBoard object and two Player objects.
-     */
     @BeforeEach
     public void setUp() {
+        Bank bank = new Bank(new ArrayList<>());
         List<Player> players = new ArrayList<>();
-        gameBoard = new GameBoard(players, true); // Create a GameBoard in test mode
+        gameBoard = new GameBoard(players, true, bank); // Create a GameBoard in test mode
         player1 = new Player("Player 1", "Token1", gameBoard);
         Player player2 = new Player("Player 2", "Token2", gameBoard);
         players.add(player1);
         players.add(player2);
     }
 
-    /**
-     * Tests the initialization of the game board.
-     * Verifies that the board has 40 spaces.
-     */
     @Test
     public void testInitializeBoard() {
         assertEquals(40, gameBoard.getSpaces().size(), "The board should have 40 spaces.");

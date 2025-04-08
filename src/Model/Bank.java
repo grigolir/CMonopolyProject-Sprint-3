@@ -58,7 +58,7 @@ public class Bank {
      * @param amount The amount of money to give.
      */
     public void payPlayer(Player player, int amount) {
-        player.increaseMoney(amount);
+        player.setMoney(player.getMoney() + amount);
         System.out.println("Bank pays " + player.getName() + " $" + amount);
     }
 
@@ -69,7 +69,7 @@ public class Bank {
      * @param amount The amount of money to collect.
      */
     public void collectFromPlayer(Player player, int amount) {
-        player.decreaseMoney(amount);
+        player.setMoney(player.getMoney() - amount);
         System.out.println("Bank collects $" + amount + " from " + player.getName());
     }
 

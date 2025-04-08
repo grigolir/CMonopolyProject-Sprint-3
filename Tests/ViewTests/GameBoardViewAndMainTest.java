@@ -8,6 +8,7 @@
 
 package ViewTests;
 
+import Model.Bank;
 import Model.GameBoard;
 import Model.Player;
 import View.GameBoardView;
@@ -22,6 +23,11 @@ import java.util.List;
  */
 public class GameBoardViewAndMainTest {
     private GameBoardView gameBoardView;
+    private final Bank bank;
+
+    public GameBoardViewAndMainTest(Bank bank) {
+        this.bank = bank;
+    }
 
     /**
      * Sets up the test environment before each test.
@@ -45,7 +51,7 @@ public class GameBoardViewAndMainTest {
         players.add(player2);
 
         // Create a game board with the list of players
-        GameBoard gameBoard = new GameBoard(players, true);  // Test mode enabled
+        GameBoard gameBoard = new GameBoard(players, true, bank);  // Test mode enabled
 
         // Set the game board for each player
         player1.setGameBoard(gameBoard);

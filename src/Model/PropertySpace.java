@@ -4,7 +4,7 @@
  * This class represents a property space on the board in a Monopoly-like game.
  * It includes attributes for pricing, rent calculation, and ownership.
  *
- * Created by Kristian Wright
+ * Created by Kristian Wright Modified by Collin Cabral-Castro
  */
 package Model;
 
@@ -20,10 +20,11 @@ public class PropertySpace extends Space {
     private final int mortgageValue;
     private final int costOfHouseHotel;
     private Player owner;
+    private final Bank bank;
 
     public PropertySpace(String name, int location, String color, int price, int propertySite, int propertySiteWithColorSet,
                          int costWithOneHouse, int costWithTwoHouses, int costWithThreeHouses, int costWithFourHouses,
-                         int costWithHotel, int mortgageValue, int costOfHouseHotel) {
+                         int costWithHotel, int mortgageValue, int costOfHouseHotel, Bank bank) {
         super(name);
         this.price = price;
         this.propertySite = propertySite;
@@ -35,6 +36,7 @@ public class PropertySpace extends Space {
         this.costWithHotel = costWithHotel;
         this.mortgageValue = mortgageValue;
         this.costOfHouseHotel = costOfHouseHotel;
+        this.bank = bank;
         this.owner = null; // Initially unowned
     }
 
@@ -44,8 +46,8 @@ public class PropertySpace extends Space {
             System.out.println(player.getName() + " landed on " + name + " which is unowned.");
         } else if (owner != player) {
             int rent = calculateRent();
-            player.decreaseMoney(rent);
-            owner.increaseMoney(rent);
+            bank.collectFromPlayer(player, rent);
+            bank.payPlayer(owner, rent);
             System.out.println(player.getName() + " landed on " + name + " and paid $" + rent + " rent to " + owner.getName());
         } else {
             System.out.println(player.getName() + " landed on their own property " + name + ".");
@@ -60,7 +62,7 @@ public class PropertySpace extends Space {
     public void buy(Player player) {
         if (owner == null) {
             owner = player;
-            player.decreaseMoney(price);
+            bank.collectFromPlayer(player, price);
             System.out.println(player.getName() + " bought " + name + " for $" + price);
         }
     }

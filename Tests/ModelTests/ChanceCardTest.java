@@ -4,7 +4,7 @@
  * This file contains unit tests for the ChanceCard class in the Monopoly game model.
  * It tests the shuffle and application of chance cards.
 
- * Created by Kristian Wright
+ * Created by Kristian Wright Modified by Collin Cabral-Castro
 
  */
 
@@ -13,6 +13,7 @@ package ModelTests;
 import Model.ChanceCard;
 import Model.GameBoard;
 import Model.Player;
+import Model.Bank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +29,7 @@ public class ChanceCardTest {
     private GameBoard gameBoard;
     private Player player1;
 
+
     /**
      * Sets up the test environment before each test.
      * Initializes a new GameBoard object and two Player objects.
@@ -35,7 +37,8 @@ public class ChanceCardTest {
     @BeforeEach
     public void setUp() {
         List<Player> players = new ArrayList<>();
-        gameBoard = new GameBoard(players , true); // Create a GameBoard in test mode
+        Bank bank = new Bank(new ArrayList<>());
+        gameBoard = new GameBoard(players , true, bank); // Create a GameBoard in test mode
         player1 = new Player("Player 1", "Token1", gameBoard);
         Player player2 = new Player("Player 2", "Token2", gameBoard);
         players.add(player1);

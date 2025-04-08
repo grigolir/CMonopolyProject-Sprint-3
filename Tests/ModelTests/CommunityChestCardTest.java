@@ -3,12 +3,13 @@
  * This file contains unit tests for the CommunityChestCard class in the Monopoly game model.
  * It tests the shuffling of Community Chest cards and the application of specific cards.
 
- * Created by Kristian Wright
+ * Created by Kristian Wright Modified by Collin Cabral-Castro
 
  */
 
 package ModelTests;
 
+import Model.Bank;
 import Model.CommunityChestCard;
 import Model.GameBoard;
 import Model.Player;
@@ -26,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CommunityChestCardTest {
     private GameBoard gameBoard;
     private Player player1;
+    private Bank bank;
 
     /**
      * Sets up the test environment before each test.
@@ -34,7 +36,8 @@ public class CommunityChestCardTest {
     @BeforeEach
     public void setUp() {
         List<Player> players = new ArrayList<>();
-        gameBoard = new GameBoard(players, true); // Create a GameBoard in test mode
+        bank = new Bank(new ArrayList<>());
+        gameBoard = new GameBoard(players, true, bank); // Create a GameBoard in test mode
         player1 = new Player("Player 1", "Token1", gameBoard);
         Player player2 = new Player("Player 2", "Token2", gameBoard);
         players.add(player1);
@@ -66,7 +69,7 @@ public class CommunityChestCardTest {
     public void testDrawAdvanceToGoCard() {
         CommunityChestCard advanceToGoCard = new CommunityChestCard("Advance to Go", (player) -> {
             player.setPosition(0);
-            player.increaseMoney(200);
+            bank.payPlayer(player,200);
         });
 
         player1.setPosition(7); // Assume player is on Community Chest space
@@ -82,7 +85,7 @@ public class CommunityChestCardTest {
      */
     @Test
     public void testDrawBankErrorInYourFavorCard() {
-        CommunityChestCard bankErrorCard = new CommunityChestCard("Bank error in your favor", (player) -> player.increaseMoney(200));
+        CommunityChestCard bankErrorCard = new CommunityChestCard("Bank error in your favor", (player) -> bank.payPlayer(player, 200));
 
         player1.setPosition(2); // Assume player is on Community Chest space
         bankErrorCard.apply(player1);

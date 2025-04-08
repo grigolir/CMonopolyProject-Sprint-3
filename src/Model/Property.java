@@ -6,7 +6,7 @@ package Model;
  * This class extends the Space class and implements the logic for buying properties,
  * paying rent, mortgaging, and unmortgaging.
 
- * Created by Kristian Wright
+ * Created by Kristian Wright modified by Collin Cabral-Castro
  */
 
 public class Property extends Space {
@@ -18,6 +18,7 @@ public class Property extends Space {
     private boolean mortgaged;
     private final int houseCount;
     private final boolean hasHotel;
+    private final Bank bank;
 
     /**
      * Constructs a Property with the given name, price, and color group.
@@ -26,12 +27,13 @@ public class Property extends Space {
      * @param price The price of the property.
      * @param colorGroup The color group of the property.
      */
-    public Property(String name, int price, String colorGroup) {
+    public Property(String name, int price, String colorGroup, Bank bank) {
         super(name); // Assuming Space has a constructor that takes a name
         this.name = name;
         this.price = price;
         this.baseRent = calculateBaseRent(price);
         this.colorGroup = colorGroup;
+        this.bank = bank;
         this.owner = null; // Initially unowned
         this.mortgaged = false;
         this.houseCount = 0;
@@ -56,7 +58,7 @@ public class Property extends Space {
     public void buy(Player player) {
         if (this.owner == null) {
             this.owner = player;
-            player.decreaseMoney(this.price);
+            bank.collectFromPlayer(player, this.price);
             player.addProperty(this); // Ensure Player class has this method
             System.out.println(player.getName() + " bought " + this.name);
         } else {
@@ -69,11 +71,11 @@ public class Property extends Space {
      *
      * @param player The player paying the rent.
      */
-    public void payRent(Player player) {
+    public void payRent(Player player, Bank bank) {
         if (this.owner != null && this.owner != player && !this.mortgaged) {
             int rentAmount = calculateRent();
-            player.decreaseMoney(rentAmount);
-            this.owner.increaseMoney(rentAmount);
+            bank.collectFromPlayer(player, rentAmount);
+            bank.payPlayer(this.owner, rentAmount);
             System.out.println(player.getName() + " paid $" + rentAmount + " rent to " + this.owner.getName());
         }
     }
@@ -95,7 +97,7 @@ public class Property extends Space {
     public void mortgage() {
         if (!mortgaged) {
             mortgaged = true;
-            owner.increaseMoney(price / 2);
+            bank.payPlayer(owner, price / 2);
             System.out.println(owner.getName() + " mortgaged " + this.name);
         }
     }
@@ -106,7 +108,7 @@ public class Property extends Space {
     public void unmortgage() {
         if (mortgaged) {
             mortgaged = false;
-            owner.decreaseMoney((int) (price * 0.55)); // 10% interest
+            bank.collectFromPlayer(owner, (int) (price * 0.55)); // 10% interest
             System.out.println(owner.getName() + " unmortgaged " + this.name);
         }
     }
@@ -221,8 +223,8 @@ public class Property extends Space {
             System.out.println(player.getName() + " landed on " + name + " which is unowned.");
         } else if (owner != player) {
             int rent = calculateRent();
-            player.decreaseMoney(rent);
-            owner.increaseMoney(rent);
+            bank.collectFromPlayer(player, rent);
+            bank.payPlayer(owner, rent);
             System.out.println(player.getName() + " landed on " + name + " and paid $" + rent + " rent to " + owner.getName());
         } else {
             System.out.println(player.getName() + " landed on their own property " + name + ".");
