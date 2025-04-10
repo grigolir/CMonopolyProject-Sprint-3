@@ -1,3 +1,14 @@
+/**
+ *
+ * Class Created by Kristian Wright
+
+ * Package: ViewTests
+
+ * This class contains unit tests for the `GameBoardView` class. It sets up a test environment
+ * with a mock game board, players, and properties, and verifies the functionality of the
+ * `displayBoard` and `displayPlayerStatus` methods.
+ */
+
 package ViewTests;
 
 import Model.Bank;
@@ -13,15 +24,19 @@ import java.util.List;
 
 public class GameBoardViewAndMainTest {
     private GameBoardView gameBoardView;
-    private Bank bank;
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes a game board with players, properties, and a bank.
+     * Links the players to the game board and creates a `GameBoardView` instance.
+     */
     @BeforeEach
     public void setUp() {
         System.out.println("Setting up the test environment...");
 
         // Create a list of properties
         List<Property> properties = new ArrayList<>();
-        this.bank = new Bank(properties); // Initialize the bank first
+        Bank bank = new Bank(properties); // Initialize the bank first
 
         // Add properties to the list with all required arguments
         properties.add(new Property("Park Place", 350, "Blue", bank));
@@ -47,6 +62,10 @@ public class GameBoardViewAndMainTest {
         System.out.println("Test environment setup complete.");
     }
 
+    /**
+     * Tests the `displayBoard` method of the `GameBoardView` class.
+     * Verifies that the game board is displayed correctly.
+     */
     @Test
     public void testDisplayBoard() {
         System.out.println("Starting testDisplayBoard...");
@@ -54,6 +73,10 @@ public class GameBoardViewAndMainTest {
         System.out.println("Finished testDisplayBoard.");
     }
 
+    /**
+     * Tests the `displayPlayerStatus` method of the `GameBoardView` class.
+     * Verifies that the player status is displayed correctly.
+     */
     @Test
     public void testDisplayPlayerStatus() {
         System.out.println("Starting testDisplayPlayerStatus...");
