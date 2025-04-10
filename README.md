@@ -24,7 +24,7 @@ This project is a digital implementation of the classic Monopoly board game, dev
 
 ## How to Run
 1. Clone the repository to your local machine.
-2. Ensure you have Java and Maven installed.
+2. Ensure you have Java, Maven, and SDK 23.0.2 installed.
 3. Build the project using Maven:
    ```bash
    mvn test
