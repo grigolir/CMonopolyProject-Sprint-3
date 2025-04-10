@@ -32,5 +32,6 @@ This project is a digital implementation of the classic Monopoly board game, dev
 
 ## UML Diagram
 
-![UML Diagram](UML)
+You can view the full UML diagram [here](Monopoly%20UML%20(2).pdf).
+
 
