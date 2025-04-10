@@ -1,5 +1,5 @@
 /**
- * Creator: Rachele Grigoli
+ * Creator: Rachele Grigoli, Modified by Collin Cabral-Castro
  *
  * This class represents the GUI of the interactive monopoly game at play
  *

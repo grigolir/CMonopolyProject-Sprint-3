@@ -1,3 +1,10 @@
+/**
+ * PlayerPanel.java
+ *
+ * This class represents a panel that displays the player's information, including their name, money, and properties.
+ *
+ * Authored by Collin Cabral-Castro
+ */
 package View;
 
 import javax.swing.*;
