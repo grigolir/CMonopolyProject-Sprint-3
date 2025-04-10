@@ -17,6 +17,7 @@ public class GUI extends JFrame {
 
     private JPanel gameBoardPanel;
     private  JTabbedPane tabbedPane;
+    private String[] selectedPlayerTokens;
     /**
      * Initialization of GUI JPanel named gameBoardPanel
      */
@@ -26,24 +27,56 @@ public class GUI extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Full-screen mode
         setLayout(new BorderLayout()); // Ensure layout is set
 
-        JPanel gameBoardPanel = new GameBoardPanel();
-        tabbedPane = new JTabbedPane();
+        String[] playerNames = {"Stacy", "Alex", "Jamie", "Jordan"};
+        String[] playerTokens = new String[playerNames.length];
 
+        for (int i = 0; i < playerNames.length; i++) {
+            playerTokens[i] = showTokenSelectionPopup(playerNames[i]); // Store the selected token
+        }
+
+        selectedPlayerTokens = new String[playerNames.length];
+        System.arraycopy(playerTokens, 0, selectedPlayerTokens, 0, playerTokens.length);
+
+        tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Your Turn", new GameActionsPanel());
         tabbedPane.addTab("Bank", new BankPanel());
-        tabbedPane.addTab("Player 1", new PlayerPanel("Stacy"));
-        tabbedPane.addTab("Player 2", new PlayerPanel("Alex"));
-        tabbedPane.addTab("Player 3", new PlayerPanel("Jamie"));
-        tabbedPane.addTab("Player 4", new PlayerPanel("Jordan"));
+
+        gameBoardPanel = new GameBoardPanel(selectedPlayerTokens);
+
+        for (int i = 0; i < playerNames.length; i++) {
+            tabbedPane.addTab(playerNames[i], new PlayerPanel(playerNames[i], playerTokens[i]));
+        }
+
+        // tabbedPane.addTab("Player 1", new PlayerPanel("Stacy"));
+        // tabbedPane.addTab("Player 2", new PlayerPanel("Alex"));
+        // tabbedPane.addTab("Player 3", new PlayerPanel("Jamie"));
+        // tabbedPane.addTab("Player 4", new PlayerPanel("Jordan"));
+
 
         add(gameBoardPanel, BorderLayout.CENTER);
-
-        //Make the tabbed pane resizable
         tabbedPane.setPreferredSize(new Dimension(700, 900));
         tabbedPane.setBackground(new Color(217, 233, 211)); // light green
         add(tabbedPane, BorderLayout.EAST);
 
         setVisible(true);
+    }
+
+    private void createUIComponents() {
+        gameBoardPanel = new GameBoardPanel(selectedPlayerTokens);
+        tabbedPane = new JTabbedPane();
+    }
+
+    private String showTokenSelectionPopup(String playerName) {
+        String[] tokenOptions = {"Car", "Dog", "Hat", "Iron", "Shoe", "Thimble"};
+        return (String) JOptionPane.showInputDialog(
+                this,
+                playerName + ", choose your token:",
+                "Token Selection",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                tokenOptions,
+                tokenOptions[0] // default selection
+        );
     }
 
     /**
@@ -56,11 +89,12 @@ public class GUI extends JFrame {
     class GameBoardPanel extends JPanel {
         private static final int SQUARE_SIZE = 82; // w and h
         private static final int BOARD_SIZE = 9;
+        private String[] playerTokens;
 
-        public GameBoardPanel() {
+        public GameBoardPanel(String[] selectedPlayerTokens) {
             setPreferredSize(new Dimension(900, 900));
             setBackground(Color.WHITE);
-            setLayout(null); // This disables the layout manager, allowing you to use setBounds.
+            setLayout(null);
 
             //Initialize and add JLabel
             JLabel goSpace = new JLabel("GO");
@@ -123,6 +157,19 @@ public class GUI extends JFrame {
             });
 
 
+            if (selectedPlayerTokens != null && selectedPlayerTokens.length > 0) {
+                List<String> tokenPNGNames = Arrays.asList("CarToken", "DogToken", "HatToken", "IronToken");
+                int[] xOffsets = {760, 760, 760, 760};  // Starting x positions for each token
+                int[] yOffsets = {600, 640, 660, 710};  // Starting y positions for each token
+                int[] tokenWidths = {55, 60, 45, 50};   // Token widths
+
+                for (int i = 0; i < selectedPlayerTokens.length; i++) {
+                    String tokenName = selectedPlayerTokens[i] + "Token"; // Append 'Token' to selected token name
+                    addToken(tokenName, xOffsets[i], yOffsets[i], tokenWidths[i]);
+                }
+            }
+
+
             revalidate();
             repaint();
         }
@@ -162,6 +209,22 @@ public class GUI extends JFrame {
         }
     }
 
+    private void addToken(String pngName, int xOffset, int yOffset, int tokenWidth) {
+        ImageIcon tokenIcon = new ImageIcon(getClass().getResource("/Images/" + pngName + ".png"));
+        Image img = tokenIcon.getImage();
+
+        // Scale the image without warping
+        int newWidth = tokenWidth;
+        int newHeight = (int) (img.getHeight(null) * ((double) newWidth / img.getWidth(null)));
+        Image scaledImage = img.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        tokenIcon = new ImageIcon(scaledImage);
+
+        JLabel tokenLabel = new JLabel(tokenIcon);
+        tokenLabel.setBounds(xOffset, yOffset, newWidth, newHeight);
+        add(tokenLabel);
+    }
+
+
     /**
      * JPanel that shows gamestate, including:
      * - player state (name, buttons, etc. [anything else to add at the moment?])
@@ -169,6 +232,7 @@ public class GUI extends JFrame {
      *      -> can change playerCount final int
      *      -> currently has a temporary playerName List
      */
+    /**
     class GameStatePanel extends JPanel {
 
         final int playerCount = 4;
@@ -237,6 +301,7 @@ public class GUI extends JFrame {
         }
 
     }
+        */
 
 
     public static void main(String[] args) {
