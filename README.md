@@ -27,4 +27,5 @@ This project is a digital implementation of the classic Monopoly board game, dev
 2. Ensure you have Java and Maven installed.
 3. Build the project using Maven:
    ```bash
+   mvn test
    mvn clean install
