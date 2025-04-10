@@ -31,7 +31,7 @@ This project is a digital implementation of the classic Monopoly board game, dev
    mvn clean install
 
 ## UML Diagram
-👉 [UML PDF](Monopoly%20UML%20(2).pdf)
+![UML PDF](https://github.com/grigolir/CMonopolyProject-Sprint-3/blob/main/UML%20Sprint%203.png)
 
 
 
