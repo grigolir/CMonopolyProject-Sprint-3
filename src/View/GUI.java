@@ -1,8 +1,8 @@
 /**
- * Creator: Rachele Grigoli, Modified by Collin Cabral-Castro
- *
+ * Creator: Rachele Grigoli, Modified by Collin Cabral-Castro and Kristian Wright
+
  * This class represents the GUI of the interactive monopoly game at play
- *
+
  * TODO: figure out how to import Dice class from Model, and delete temporary dice buttons
  * try to resolve Model import issue
  */
@@ -17,7 +17,7 @@ public class GUI extends JFrame {
 
     private JPanel gameBoardPanel;
     private  JTabbedPane tabbedPane;
-    private String[] selectedPlayerTokens;
+    private final String[] selectedPlayerTokens;
     /**
      * Initialization of GUI JPanel named gameBoardPanel
      */
@@ -42,6 +42,8 @@ public class GUI extends JFrame {
         tabbedPane.addTab("Bank", new BankPanel());
 
         gameBoardPanel = new GameBoardPanel(selectedPlayerTokens);
+        gameBoardPanel.setName("gameBoardPanel"); // Assign a unique name
+        add(gameBoardPanel, BorderLayout.CENTER);
 
         for (int i = 0; i < playerNames.length; i++) {
             tabbedPane.addTab(playerNames[i], new PlayerPanel(playerNames[i], playerTokens[i]));
