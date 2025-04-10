@@ -12,12 +12,20 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Dice {
+    private static Dice uniqueInstance;
     private int doublesRolled;
     private final Random random;
 
-    public Dice() {
+    private Dice() {
         this.doublesRolled = 0;
         this.random = new Random();
+    }
+
+    public static Dice getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new Dice();
+        }
+        return uniqueInstance;
     }
 
     public ArrayList<Integer> rollDice() {

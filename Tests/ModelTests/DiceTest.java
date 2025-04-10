@@ -31,7 +31,7 @@ public class DiceTest {
      */
     @BeforeEach
     public void setUp() {
-        dice = new Dice();
+        dice = Dice.getInstance();
         Bank bank = new Bank(new ArrayList<>());
         GameBoard gameBoard = new GameBoard(new ArrayList<>(), true, bank);  // or false, depending on the use case
         player = new Player("TestPlayer", "Car", gameBoard);

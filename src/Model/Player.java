@@ -44,7 +44,7 @@ public class Player {
         this.jailTurns = 0;
         this.hasGetOutOfJailFreeCard = false;
         this.gameBoard = gameBoard;
-        this.dice = new Dice();
+        this.dice = Dice.getInstance();
     }
 
     /**

@@ -11,7 +11,7 @@ import Model.Dice;
 
 public class DiceMain {
     public static void main(String[] args) {
-        Dice dice = new Dice();
+        Dice dice = Dice.getInstance();
         DiceView diceView = new DiceView(dice);
 
         // Roll the dice until 3 doubles are rolled

@@ -13,7 +13,7 @@ public class DiceViewTest {
 
     @BeforeEach
     public void setUp() {
-        dice = new Dice();
+        dice = Dice.getInstance();
         diceView = new DiceView(dice);
     }
 

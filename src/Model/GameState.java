@@ -20,7 +20,7 @@ public class GameState {
 
     public GameState(GameBoard board) {
         this.board = board;
-        this.dice = new Dice();
+        this.dice = Dice.getInstance();
         this.players = board.getPlayers();
         this.currentPlayerIndex = 0;
         this.gameOver = false;
