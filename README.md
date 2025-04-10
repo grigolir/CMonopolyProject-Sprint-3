@@ -29,3 +29,8 @@ This project is a digital implementation of the classic Monopoly board game, dev
    ```bash
    mvn test
    mvn clean install
+
+## UML Diagram
+
+![UML Diagram](UML)
+
