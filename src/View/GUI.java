@@ -4,7 +4,7 @@
  * This class represents the GUI of the interactive monopoly game at play
  *
  * TODO: figure out how to import Dice class from Model, and delete temporary dice buttons
- * try to resolve Model import issue 
+ * try to resolve Model import issue
  */
 package View;
 
@@ -16,9 +16,7 @@ import java.util.List;
 public class GUI extends JFrame {
 
     private JPanel gameBoardPanel;
-    private JPanel gameStatePanel;
-
-
+    private  JTabbedPane tabbedPane;
     /**
      * Initialization of GUI JPanel named gameBoardPanel
      */
@@ -27,18 +25,25 @@ public class GUI extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Full-screen mode
         setLayout(new BorderLayout()); // Ensure layout is set
-        gameBoardPanel = new GameBoardPanel();
-        gameStatePanel = new GameStatePanel();
+
+        JPanel gameBoardPanel = new GameBoardPanel();
+        tabbedPane = new JTabbedPane();
+
+        tabbedPane.addTab("Your Turn", new GameActionsPanel());
+        tabbedPane.addTab("Bank", new BankPanel());
+        tabbedPane.addTab("Player 1", new PlayerPanel("Stacy"));
+        tabbedPane.addTab("Player 2", new PlayerPanel("Alex"));
+        tabbedPane.addTab("Player 3", new PlayerPanel("Jamie"));
+        tabbedPane.addTab("Player 4", new PlayerPanel("Jordan"));
 
         add(gameBoardPanel, BorderLayout.CENTER);
-        add(gameStatePanel, BorderLayout.EAST);
+
+        //Make the tabbed pane resizable
+        tabbedPane.setPreferredSize(new Dimension(700, 900));
+        tabbedPane.setBackground(new Color(217, 233, 211)); // light green
+        add(tabbedPane, BorderLayout.EAST);
 
         setVisible(true);
-    }
-
-    private void createUIComponents() {
-        gameBoardPanel = new GameBoardPanel();
-        gameStatePanel = new GameStatePanel();
     }
 
     /**
