@@ -162,12 +162,12 @@ public class GUI extends JFrame {
             if (selectedPlayerTokens != null && selectedPlayerTokens.length > 0) {
                 List<String> tokenPNGNames = Arrays.asList("CarToken", "DogToken", "HatToken", "IronToken");
                 int[] xOffsets = {760, 760, 760, 760};  // Starting x positions for each token
-                int[] yOffsets = {600, 640, 660, 710};  // Starting y positions for each token
-                int[] tokenWidths = {55, 60, 45, 50};   // Token widths
+                int[] yOffsets = {740, 710, 680, 650};  // Starting y positions for each token
+                int tokenWidths = 55;   // Token widths
 
                 for (int i = 0; i < selectedPlayerTokens.length; i++) {
                     String tokenName = selectedPlayerTokens[i] + "Token"; // Append 'Token' to selected token name
-                    addToken(tokenName, xOffsets[i], yOffsets[i], tokenWidths[i]);
+                    addToken(tokenName, xOffsets[i], yOffsets[i], tokenWidths);
                 }
             }
 
